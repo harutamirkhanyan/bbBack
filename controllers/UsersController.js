@@ -1,60 +1,50 @@
-const fs = require('fs');
-const { getUserByUsername, editUserByUsername } = require('../utils/userUtils')
-// const qs = require('querystring')
+const User = require('../models/User');
 
-const getUsersHandler = (req, res) => {
-  res.send('Get users route')
-}
+const getSingleUserHandler = async (req, res) => {
+  const { username } = req.query;
 
-
-const getSingleUserHandler = (req, res) => {
-  const username = req.query.username;
-  const user = getUserByUsername(username)
-  res.send(JSON.stringify(user))
-}
-
-
-
-const addUsersHandler = (req, res, next) => {
-  let data = ''
-  req.on('data', (chunk) => {
-    data += chunk.toString()
-    console.log(data.toString(), 'data')
-  })
-
-  fs.writeFile('./first.txt', data.toString(), (err) => {
-    if (err) {
-      console.log(err);
+  try {
+    const user = await User.findOne({ username });
+    if (user) {
+      res.json(user);
     } else {
-      console.log('File first.txt was  written')
-      fs.appendFile('./first.txt', data, (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Text added');
-        }
-      });
+      res.status(404).json({ message: 'User not found' });
     }
-  });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving user' });
+  }
+};
 
-  res.send('User added')
-}
+const addUsersHandler = async (req, res) => {
+  const { username, password, email, phone, name } = req.body;
 
-const editUser = (req, res, next) => {
-  const data=req.body.data
-  console.log(data)
-  const currentUsername=req.body.currentUsername
-  editUserByUsername(currentUsername, data)
-  const changedUsername=data.username 
-  const user = getUserByUsername(changedUsername);
-  res.json({ user})
-}
+  const newUser = new User({ username, password, email, phone, name });
+
+  try {
+    await newUser.save();
+    res.json({ message: 'User added successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding user' });
+  }
+};
+
+const editUser = async (req, res) => {
+  const { currentUsername, data } = req.body;
+
+  try {
+    const user = await User.findOneAndUpdate({ username: currentUsername }, data, { new: true });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user' });
+  }
+};
 
 module.exports = {
-  getUsersHandler,
   getSingleUserHandler,
   addUsersHandler,
   editUser
-}
-
-
+};

@@ -1,20 +1,22 @@
 const jwt = require('jsonwebtoken');
-const { getUserByUsername } = require('../utils/userUtils');
+const User = require('../models/User');
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { username, password } = req.body;
-  
-  const user = getUserByUsername(username);
-  
-  if (user && user.password === password) {
-    // Create token
-    const token = jwt.sign({ userId: user.id, username: user.username }, 'secret_key', { expiresIn: '15m' });
-    res.json({ token, user });
-  } else {
-    res.status(401).json({ message: 'Wrong login or password' });
+
+  try {
+    const user = await User.findOne({ username });
+    if (user && user.password === password) {
+      const token = jwt.sign({ userId: user._id, username: user.username }, 'secret_key', { expiresIn: '15m' });
+      res.json({ token, user });
+    } else {
+      res.status(401).json({ message: 'Wrong login or password' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in', error });
   }
 };
 
 module.exports = {
   login
-}
+};
