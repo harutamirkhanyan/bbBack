@@ -7,18 +7,6 @@ const homeFilePath = path.join(__dirname, '..', 'data', 'homeData.json');
 
 
 
-// function readHomeData() {
-//  const x= fs.readFile(homeFilePath, 'utf8', (err, data) => {
-//     if (err) {
-//  
-//       return
-//     }
-//     return JSON.parse(data)
-//   })
-//   console.log(x)
-//   return x
-// }
-
 function readHomeData() {
   return new Promise((resolve, reject) => {
     fs.readFile(homeFilePath, 'utf8', (err, data) => {
@@ -32,16 +20,6 @@ function readHomeData() {
   })
 }
 
-// function writeUsersToFile(users) {
-//   const data = JSON.stringify(users, null, 2);
-//   fs.writeFileSync(usersFilePath, data);
-// }
-
-// function addUser(newUser) {
-//   const users = readUsersFromFile();
-//   users.push(newUser);
-//   writeUsersToFile(users);
-// }
 
 async function homeData() {
   try {
@@ -52,29 +30,21 @@ async function homeData() {
   }
 }
 
-// function getUserByUsername(username) {
-//   const users = readUsersFromFile();
-//   return users.find(user => user.username === username);
-// }
-
-
 
 async function editArticleById(currentId, updatedData, arrayName) {
   try {
-    let data = await readHomeData(); // Получаем данные из файла
+    let data = await readHomeData();
 
-    if (data[arrayName]) { // Проверяем, существует ли массив с таким именем
-      const index = data[arrayName].findIndex(item => item.id === currentId); // Ищем индекс элемента по currentId
+    if (data[arrayName]) {
+      const index = data[arrayName].findIndex(item => item.id === currentId);
 
-      if (index !== -1) { // Если элемент найден
-        // Обновляем только нужные поля
+      if (index !== -1) {
         for (const key in updatedData) {
           if (Object.hasOwnProperty.call(updatedData, key)) {
             data[arrayName][index][key] = updatedData[key];
           }
         }
 
-        // Записываем изменения обратно в файл
         fs.writeFileSync(homeFilePath, JSON.stringify(data, null, 2));
         console.log('true, article was changed');
         return true;
@@ -91,7 +61,5 @@ async function editArticleById(currentId, updatedData, arrayName) {
     throw error;
   }
 }
-
-
 
 module.exports = { homeData, editArticleById };

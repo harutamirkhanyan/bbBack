@@ -2,6 +2,9 @@
 node_modules
 /dist
 .gitlab-ci.yml
+migrate.js
+/migrate.js
+/data
 
 
 # Editor directories and files

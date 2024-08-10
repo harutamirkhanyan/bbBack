@@ -33,23 +33,6 @@ function getUserByUsername(username) {
 }
 
 
-
-// function editUserByUsername(currentUsername, data) {
-//   console.log(currentUsername, 'edituser')
-//   let users = readUsersFromFile();
-//   const index = users.findIndex(user => user.username === currentUsername);
-
-//   if (index !== -1) {
-//     users[index] = data;
-//     writeUsersToFile(users);
-//     console.log('true, user was changed')
-//     // return true;
-//   } else {
-//     console.log('false, error during user writing')
-//     // return false;
-//   }
-// }
-
 function editUserByUsername(currentUsername, updatedData) {
   let users = readUsersFromFile();
   const index = users.findIndex(user => user.username === currentUsername);

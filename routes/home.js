@@ -1,8 +1,10 @@
 const express = require('express');
-const { getHomeData, saveHomeData } = require('../controllers/HomeController');
+const { getHomeData, changeHomeData, addHomeData, deleteHomeData } = require('../controllers/HomeController');
 const router = express.Router();
 
 router.get('/', getHomeData);
-router.post('/', saveHomeData);
+router.put('/', changeHomeData); 
+router.post('/', addHomeData);
+router.delete('/', deleteHomeData);
 
 module.exports = router;

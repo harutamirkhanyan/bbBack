@@ -5,7 +5,7 @@ import router from './routes/index.js';
 import bodyParser from 'body-parser';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import './db.js'; // Подключаем к базе данных
+import './db.js'; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
