@@ -7,7 +7,7 @@ const getHomeData = async (req, res) => {
       const { _id, __v, ...filteredData } = homeData;
       res.json(filteredData);
     } else {
-      res.status(404).json({ message: 'Данные не найдены' });
+      res.status(404).json({ message: 'Данные не найдены ???' });
     }
   } catch (error) {
     res.status(500).json({ message: 'Ошибка при получении данных', error });
@@ -40,7 +40,6 @@ const changeHomeData = async (req, res) => {
 const addHomeData = async (req, res) => {
   
   const { data, arrayName } = req.body;
-  console.log(req.body)
   try {
     const homeData = await HomeData.findOne();
 

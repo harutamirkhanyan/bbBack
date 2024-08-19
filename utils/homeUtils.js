@@ -46,10 +46,8 @@ async function editArticleById(currentId, updatedData, arrayName) {
         }
 
         fs.writeFileSync(homeFilePath, JSON.stringify(data, null, 2));
-        console.log('true, article was changed');
         return true;
       } else {
-        console.log('false, error during article writing: item with given ID not found');
         return false;
       }
     } else {

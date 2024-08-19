@@ -40,11 +40,9 @@ function editUserByUsername(currentUsername, updatedData) {
   if (index !== -1) {
     users[index] = { ...users[index], ...updatedData };
     writeUsersToFile(users);
-    console.log('true, user was changed');
-    // return true;
+    return true;
   } else {
-    console.log('false, error during user writing');
-    // return false;
+    return false;
   }
 }
 

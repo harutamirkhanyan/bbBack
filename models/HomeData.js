@@ -21,8 +21,16 @@ const projectSchema = new mongoose.Schema({
   description: {
     type: String,
     required: false
+  },
+  text: {
+    type: String,
+    required: false
+  },
+  image: {
+    type: String,
+    required: false
   }
-}, { _id: false }); 
+}, { _id: false });
 
 const storeItemSchema = new mongoose.Schema({
   id: {
@@ -38,20 +46,24 @@ const storeItemSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  src: {
+  geo: {
     type: String,
     required: false
   },
   description: {
     type: String,
     required: false
+  },
+  image: {
+    type: String,
+    required: false
   }
-}, { _id: false }); 
+}, { _id: false });
 
 const homeDataSchema = new mongoose.Schema({
   project: [projectSchema],
   storeItems: [storeItemSchema]
-}, { versionKey: false }); 
+}, { versionKey: false });
 
 homeDataSchema.set('toJSON', {
   transform: (doc, ret) => {
