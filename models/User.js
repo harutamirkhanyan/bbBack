@@ -6,9 +6,10 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   phone: { type: String },
   name: { type: String },
-  role: { type: String, enum: ['admin', 'user'], default: 'user' }, 
-  isBlocked: { type: Boolean, default: false }, 
-  lastLogin : {type :Date}
+  role: { type: String, enum: ['admin', 'user'], default: 'user' },
+  isBlocked: { type: Boolean, default: false },
+  lastLogin: { type: Date },
+  registered: { type: Date }
 });
 
 const User = mongoose.model('User', userSchema);

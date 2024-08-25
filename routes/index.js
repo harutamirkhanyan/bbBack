@@ -10,11 +10,16 @@ const authenticateToken = require('../utils/authMiddleware')
 
 const router = express.Router()
 
+router.get('/verify-token', authenticateToken, (req, res) => {
+  res.json({ user: req.user });
+});
 router.use('/comments', authenticateToken, commentsRouter)
 router.use('/users',authenticateToken, users)
 router.use('/login', login)
 router.use('/register', register)
 router.use('/home', home)
+
+
 
 router.use('/', rootRouter)
 

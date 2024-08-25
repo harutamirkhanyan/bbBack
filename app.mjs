@@ -9,10 +9,14 @@ import './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
+ 
 const app = express();
 app.use(express.static(join(__dirname, 'public')));
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080', 
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true
+}));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(router);

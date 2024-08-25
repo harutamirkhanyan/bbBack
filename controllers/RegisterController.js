@@ -1,36 +1,46 @@
+
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-
-// const register = async (req, res) => {
-//   const { username, password, email, phone, name } = req.body;
-
-//   try {
-//     const existingUser = await User.findOne({ username });
-//     if (existingUser) {
-//       return res.status(400).json({ message: 'Пользователь с таким именем уже существует' });
-//     }
-
-//     const newUser = new User({ username, password, email, phone, name });
-//     await newUser.save();
-
-//     const token = jwt.sign({ username: newUser.username }, 'secret_key', { expiresIn: '15m' });
-//     res.json({ token });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error registering user', error });
-//   }
-// };
 
 const register = async (req, res) => {
   const { username, password, email, phone, name } = req.body;
 
   try {
+    // Проверяем, существует ли уже пользователь с таким же username или email
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User with this username or email already exists' });
+    }
+
+    // Подсчет количества пользователей для назначения роли
     const existingUsers = await User.countDocuments();
     const role = existingUsers === 0 ? 'admin' : 'user';
-    
-    const newUser = new User({ username, password, email, phone, name, role });
+
+    // Хэшируем пароль
+    // const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Создаем нового пользователя с полем isVerified по умолчанию true
+    const newUser = new User({
+      username,
+      password,
+      email,
+      phone,
+      name,
+      role,
+      registered: new Date()
+    });
+
     await newUser.save();
-    res.json({ message: 'User registered successfully' });
+    const token = jwt.sign({ id: newUser._id, username: newUser.username }, 'secret_key', { expiresIn: '15m' });
+
+    res.json({
+      message: 'User registered successfully',
+      token,
+      user: newUser
+    });
   } catch (error) {
+    console.error('Error registering user:', error); // Логирование ошибки
     res.status(500).json({ message: 'Error registering user' });
   }
 };
