@@ -6,13 +6,16 @@ const login = require('./login')
 const register = require('./register')
 const home = require('./home')
 const authenticateToken = require('../utils/authMiddleware')
+const verifyToken  = require('./verifyToken')
 
 
 const router = express.Router()
 
-router.get('/verify-token', authenticateToken, (req, res) => {
-  res.json({ user: req.user });
-});
+// router.get('/verify-token', authenticateToken, (req, res) => {
+//   // Если токен действителен, возвращаем данные пользователя
+//   res.json({ user: req.user });
+// });
+router.use('/verify-token',authenticateToken, verifyToken)
 router.use('/comments', authenticateToken, commentsRouter)
 router.use('/users',authenticateToken, users)
 router.use('/login', login)
