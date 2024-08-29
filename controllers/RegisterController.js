@@ -1,4 +1,3 @@
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -18,12 +17,11 @@ const register = async (req, res) => {
     const role = existingUsers === 0 ? 'admin' : 'user';
 
     // Хэшируем пароль
-    // const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Создаем нового пользователя с полем isVerified по умолчанию true
     const newUser = new User({
       username,
-      password,
+      password: hashedPassword,
       email,
       phone,
       name,
@@ -40,11 +38,10 @@ const register = async (req, res) => {
       user: newUser
     });
   } catch (error) {
-    console.error('Error registering user:', error); // Логирование ошибки
+    console.error('Error registering user:', error); 
     res.status(500).json({ message: 'Error registering user' });
   }
 };
-
 
 module.exports = {
   register
