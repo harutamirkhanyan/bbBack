@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['admin', 'user'], default: 'user' },
   isBlocked: { type: Boolean, default: false },
   lastLogin: { type: Date },
-  registered: { type: Date }
+  registered: { type: Date },
+  resetPasswordToken: { type: String },
 });
 
 const User = mongoose.model('User', userSchema);
