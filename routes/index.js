@@ -7,6 +7,7 @@ import register from './register.js';
 import home from './home.js';
 import verifyToken from './verifyToken.js';
 import auth from './auth.js';
+import logsRouter from './logs.js';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use('/register', register);
 router.use('/home', home);
 router.use('/verify-token', verifyToken);
 router.use('/auth', auth);
+router.use('/logs', logsRouter);
 
 export default router;
