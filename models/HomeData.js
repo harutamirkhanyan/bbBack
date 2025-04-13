@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const projectSchema = new mongoose.Schema({
   id: {
@@ -83,4 +83,4 @@ homeDataSchema.set('toObject', {
 
 const HomeData = mongoose.model('HomeData', homeDataSchema);
 
-module.exports = HomeData;
+export default HomeData;

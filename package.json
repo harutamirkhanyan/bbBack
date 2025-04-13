@@ -2,12 +2,14 @@
   "name": "05-front-and-back",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node app.mjs",
     "dev": "nodemon app.mjs"
   },
   "keywords": [],
+  
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -1,30 +1,22 @@
-const express = require('express')
-const commentsRouter = require('./comments')
-const users = require('./users')
-const rootRouter = require('./root')
-const login = require('./login')
-const register = require('./register')
-const home = require('./home')
-const authenticateToken = require('../utils/authMiddleware')
-const verifyToken = require('./verifyToken')
-const auth = require('./auth')
+import express from 'express';
+import commentsRouter from './comments.js';
+import users from './users.js';
+import rootRouter from './root.js';
+import login from './login.js';
+import register from './register.js';
+import home from './home.js';
+import verifyToken from './verifyToken.js';
+import auth from './auth.js';
 
-const router = express.Router()
+const router = express.Router();
 
-// router.get('/verify-token', authenticateToken, (req, res) => {
-//   // Если токен действителен, возвращаем данные пользователя
-//   res.json({ user: req.user });
-// });
-router.use('/verify-token', authenticateToken, verifyToken)
-router.use('/comments', authenticateToken, commentsRouter)
-router.use('/users', authenticateToken, users)
-router.use('/login', login)
-router.use('/register', register)
-router.use('/home', home)
-router.use('/', auth);
+router.use('/comments', commentsRouter);
+router.use('/users', users);
+router.use('/root', rootRouter);
+router.use('/login', login);
+router.use('/register', register);
+router.use('/home', home);
+router.use('/verify-token', verifyToken);
+router.use('/auth', auth);
 
-
-
-router.use('/', rootRouter)
-
-module.exports = router
+export default router;

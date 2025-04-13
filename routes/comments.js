@@ -1,8 +1,10 @@
-const express = require('express')
+import express from 'express';
 // const { getCommentsHandler, getSingleCommentHandler, postCommentsHandler, deleteSingleCommentHandler } = require('../controllers/comments')
-const { getCommentsHandler } = require('../controllers/CommentsController')
-const router = express.Router()
+import { getCommentsHandler } from'../controllers/CommentsController.js'
+// const router = express.Router()
 
+
+const router = express.Router();
 
 router.get('/', getCommentsHandler)
 // router.post('/', postCommentsHandler)
@@ -10,4 +12,4 @@ router.get('/', getCommentsHandler)
 // router.delete('/:commentId', deleteSingleCommentHandler)
 
 
-module.exports = router
+export default router;

@@ -1,6 +1,6 @@
-const HomeData = require('../models/HomeData');
+import HomeData from '../models/HomeData.js';
 
-const getHomeData = async (req, res) => {
+export const getHomeData = async (req, res) => {
   try {
     const homeData = await HomeData.findOne().lean();
     if (homeData) {
@@ -14,7 +14,7 @@ const getHomeData = async (req, res) => {
   }
 };
 
-const changeHomeData = async (req, res) => {
+export const changeHomeData = async (req, res) => {
   const { id, data, arrayName } = req.body;
   try {
     const homeData = await HomeData.findOne();
@@ -37,7 +37,7 @@ const changeHomeData = async (req, res) => {
   }
 };
 
-const addHomeData = async (req, res) => {
+export const addHomeData = async (req, res) => {
   
   const { data, arrayName } = req.body;
   try {
@@ -57,7 +57,7 @@ const addHomeData = async (req, res) => {
   }
 };
 
-const deleteHomeData = async (req, res) => {
+export const deleteHomeData = async (req, res) => {
   const { ids, arrayName } = req.body;
   try {
     const homeData = await HomeData.findOne();
@@ -76,9 +76,4 @@ const deleteHomeData = async (req, res) => {
   }
 };
 
-module.exports = {
-  getHomeData,
-  changeHomeData,
-  addHomeData,
-  deleteHomeData
-};
+

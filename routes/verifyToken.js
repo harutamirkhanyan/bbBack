@@ -1,7 +1,7 @@
-const express = require('express');
-const { verifyToken } = require('../controllers/VerifyToken.js');
+import express from 'express';
+import { verifyToken } from '../controllers/VerifyToken.js';
 const router = express.Router();
 
 router.get('/', verifyToken);
 
-module.exports = router;
+export default router

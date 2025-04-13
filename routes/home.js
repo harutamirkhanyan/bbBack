@@ -1,10 +1,10 @@
-const express = require('express');
-const { getHomeData, changeHomeData, addHomeData, deleteHomeData } = require('../controllers/HomeController');
+import express from 'express';
+import { getHomeData, changeHomeData, addHomeData, deleteHomeData } from '../controllers/HomeController.js';
 const router = express.Router();
 
 router.get('/', getHomeData);
-router.put('/', changeHomeData); 
+router.put('/', changeHomeData);
 router.post('/', addHomeData);
 router.delete('/', deleteHomeData);
 
-module.exports = router;
+export default router;

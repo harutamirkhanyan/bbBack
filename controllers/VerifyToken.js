@@ -1,7 +1,7 @@
-const User = require('../models/User');
+import User from '../models/User.js';
 
 
-const verifyToken = async (req, res) => {
+export const verifyToken = async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select('-password');
 
@@ -17,9 +17,7 @@ const verifyToken = async (req, res) => {
 };
 
 
-module.exports = {
-  verifyToken
-};
+
 
 
 

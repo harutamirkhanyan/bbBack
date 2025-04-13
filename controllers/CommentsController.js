@@ -1,5 +1,5 @@
 
-const getCommentsHandler = (req, res) => {
+export const getCommentsHandler = (req, res) => {
   res.send('Get comments route')
 }
 
@@ -18,10 +18,3 @@ const getCommentsHandler = (req, res) => {
 //   res.send(`Delete comment route comment Id ${req.params.commentId}`)
 // }
 
-
-module.exports = {
-  getCommentsHandler,
-  // getSingleCommentHandler,
-  // postCommentsHandler,
-  // deleteSingleCommentHandler
-}

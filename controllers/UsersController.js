@@ -1,6 +1,6 @@
-const User = require('../models/User');
+import User from '../models/User.js';
 
-const getSingleUserHandler = async (req, res) => {
+export const getSingleUserHandler = async (req, res) => {
   const { username } = req.query; 1
   try {
     const user = await User.findOne({ username });
@@ -14,7 +14,7 @@ const getSingleUserHandler = async (req, res) => {
   }
 };
 
-const getAllUserList = async (req, res) => {
+export const getAllUserList = async (req, res) => {
   try {
     const userList = await User.find()
     res.json(userList)
@@ -26,7 +26,7 @@ const getAllUserList = async (req, res) => {
 
 
 
-const addUsersHandler = async (req, res) => {
+export const addUsersHandler = async (req, res) => {
   const { username, password, email, phone, name } = req.body;
 
   const newUser = new User({ username, password, email, phone, name });
@@ -39,7 +39,7 @@ const addUsersHandler = async (req, res) => {
   }
 };
 
-const editUser = async (req, res) => {
+export const editUser = async (req, res) => {
   const { currentUsername, data } = req.body;
 
   try {
@@ -54,7 +54,7 @@ const editUser = async (req, res) => {
   }
 };
 
-const blockUsers = async (req, res) => {
+export const blockUsers = async (req, res) => {
   try {
     const { userIds } = req.body; // Извлечение массива идентификаторов пользователей из тела запроса
 
@@ -81,7 +81,7 @@ const blockUsers = async (req, res) => {
   }
 };
 
-const unblockUsers = async (req, res) => {
+export const unblockUsers = async (req, res) => {
   try {
     const { userIds } = req.body;
 
@@ -104,7 +104,7 @@ const unblockUsers = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const { userIds } = req.body; // Извлечение массива идентификаторов пользователей из тела запроса
 
@@ -129,7 +129,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const changeUserRole = async (req, res) => {
+export const changeUserRole = async (req, res) => {
   try {
     const { userId, role } = req.body;
 
@@ -153,14 +153,4 @@ const changeUserRole = async (req, res) => {
 };
 
 
-module.exports = {
-  getSingleUserHandler,
-  addUsersHandler,
-  editUser,
-  getAllUserList,
-  blockUsers,
-  unblockUsers,
-  deleteUser,
-  changeUserRole
 
-};

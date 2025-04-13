@@ -1,8 +1,8 @@
-const express = require('express')
-const {getRootHandler}=require('../controllers/RootController')
+import express from 'express';
+import {getRootHandler} from '../controllers/RootController.js'
 
 const router = express.Router()
 
 router.get('/', getRootHandler)
 
-module.exports = router
+export default router

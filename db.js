@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 mongoose.connect('mongodb://localhost:27017/database', {
   serverSelectionTimeoutMS: 30000,
@@ -12,4 +12,4 @@ db.once('open', function () {
   console.log('Connected to MongoDB');
 });
 
-module.exports = db;
+export default db;

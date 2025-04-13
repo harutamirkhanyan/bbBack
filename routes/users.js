@@ -1,5 +1,5 @@
-const express = require('express');
-const { getSingleUserHandler, addUsersHandler, editUser, getAllUserList, blockUsers,unblockUsers, deleteUser, changeUserRole} = require('../controllers/UsersController');
+import express from 'express';
+import { getSingleUserHandler, addUsersHandler, editUser, getAllUserList, blockUsers, unblockUsers, deleteUser, changeUserRole } from '../controllers/UsersController.js';
 const router = express.Router();
 // const adminOnly = require('../middlewares/adminOnly');
 
@@ -14,4 +14,4 @@ router.post('/role', changeUserRole);
 
 
 
-module.exports = router;
+export default router
