@@ -11,7 +11,7 @@ export const login = async (req, res) => {
       return res.status(403).json({ message: 'Account is blocked' });
     }
     if (user && await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ userId: user._id, username: user.username }, 'secret_key', { expiresIn: '15m' });
+      const token = jwt.sign({ userId: user._id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '15m' });
       user.lastLogin = new Date();
       await user.save();
       res.json({ token, user });

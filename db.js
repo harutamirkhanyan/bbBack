@@ -1,9 +1,13 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-mongoose.connect('mongodb://localhost:27017/database', {
+dotenv.config();
+
+mongoose.connect(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 30000,
   socketTimeoutMS: 45000,
 });
+
 
 const db = mongoose.connection;
 

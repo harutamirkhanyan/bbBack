@@ -2,14 +2,16 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import router from './routes/index.js';
-import bodyParser from 'body-parser';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import './db.js'; 
+import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
  
+dotenv.config();
+
 const app = express();
 app.use(express.static(join(__dirname, 'public')));
 app.use(cors({
