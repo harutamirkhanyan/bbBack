@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import { getProjects, addProject, updateProject, deleteProject } from '../controllers/projectsController.js';
+import { getProjects, addProject, updateProject, deleteProject } from '../controllers/ProjectsController.js';
 import verifyToken from '../middlewares/verifyToken.js';
 
 const router = express.Router();

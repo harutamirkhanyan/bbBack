@@ -1,14 +1,12 @@
 import Project from '../models/Project.js';
 import Log from '../models/Log.js';
-import path from 'path';
-import fs from 'fs';
 
 export const getProjects = async (req, res) => {
   try {
     const projects = await Project.find();
     res.json(projects);
   } catch (err) {
-    res.status(500).json({ message: 'Ошибка сервера' });
+    res.status(500).json({ message: 'Failed to fetch projects' });
   }
 };
 
@@ -21,28 +19,39 @@ export const addProject = async (req, res) => {
 
     await Log.create({
       user: req.userId,
-      action: `Добавлен проект: ${title}`,
+      action: `Project created: ${title}`,
     });
 
     res.status(201).json(newProject);
   } catch (err) {
     console.error(err);
-    res.status(400).json({ message: 'Ошибка при создании проекта' });
+    res.status(400).json({ message: 'Failed to create project' });
   }
 };
 
 export const updateProject = async (req, res) => {
   try {
-    const updated = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { title, description } = req.body;
+    let image = req.body.image;
+
+    if (req.file) {
+      image = `/uploads/${req.file.filename}`;
+    }
+
+    const updated = await Project.findByIdAndUpdate(
+      req.params.id,
+      { title, description, image },
+      { new: true }
+    );
 
     await Log.create({
       user: req.userId,
-      action: `Обновлён проект: ${updated.title}`,
+      action: `Project updated: ${updated.title}`,
     });
 
     res.json(updated);
   } catch (err) {
-    res.status(400).json({ message: 'Ошибка при обновлении проекта' });
+    res.status(400).json({ message: 'Failed to update project' });
   }
 };
 
@@ -52,11 +61,11 @@ export const deleteProject = async (req, res) => {
 
     await Log.create({
       user: req.userId,
-      action: `Удалён проект: ${deleted.title}`,
+      action: `Project deleted: ${deleted.title}`,
     });
 
-    res.json({ message: 'Проект удалён' });
+    res.json({ message: 'Project deleted' });
   } catch (err) {
-    res.status(400).json({ message: 'Ошибка при удалении проекта' });
+    res.status(400).json({ message: 'Failed to delete project' });
   }
 };
