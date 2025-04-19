@@ -4,24 +4,30 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import nodemailer from 'nodemailer';
 
-// Функция отправки письма с ссылкой для сброса пароля через Mailjet
+
 export const sendResetPasswordEmail = async (user, token) => {
+  const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`📧  DEV‑режим: ссылка сброса для ${user.email}: ${resetUrl}`);
+    return;
+  }
+
+  // ниже ‑ боевой SMTP
   const transporter = nodemailer.createTransport({
     host: 'in-v3.mailjet.com',
     port: 587,
     auth: {
-      user: 'c45f645dc72f64f84cd593f3da123c85', // замените на ваш Mailjet API Key
-      pass: '27953b06ceeb4db0a3d9b1beed929113' // замените на ваш Mailjet Secret Key
-    }
+      user: process.env.MAILJET_API_KEY,
+      pass: process.env.MAILJET_SECRET_KEY,
+    },
   });
 
-  const resetUrl = `http://localhost:8080/reset-password/${token}`;
-
   await transporter.sendMail({
-    from: 'a94harut@gmail.com',  // замените на ваш email
+    from: '"MyApp" <no‑reply@myapp.com>',
     to: user.email,
-    subject: 'Password Reset',
-    html: `<p>To reset your password, click the following link: <a href="${resetUrl}">${resetUrl}</a></p>`
+    subject: 'Password reset',
+    html: `<p>Сбросьте пароль по ссылке: <a href="${resetUrl}">${resetUrl}</a></p>`,
   });
 };
 
@@ -33,7 +39,7 @@ export const requestPasswordReset = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
